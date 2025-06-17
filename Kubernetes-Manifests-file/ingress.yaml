@@ -11,8 +11,7 @@ metadata:
 spec:
   ingressClassName: alb
   rules:
-    - host: threetier.2118solutions.info
-      http:
+    - http:
         paths:
           - path: /ok
             pathType: Prefix
