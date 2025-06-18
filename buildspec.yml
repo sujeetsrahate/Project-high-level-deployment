@@ -16,11 +16,7 @@ phases:
       nodejs: 18
     commands:
       - echo Installing utilities...
-      - yum install -y jq curl
-      - echo Installing kubectl...
-      - curl -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.27.3/2023-09-14/bin/linux/amd64/kubectl
-      - chmod +x ./kubectl
-      - mv ./kubectl /usr/local/bin
+      - yum install -y jq
 
   pre_build:
     commands:
@@ -68,11 +64,6 @@ phases:
       # --- DEBUG ---
       - echo "Final list of generated Kubernetes YAML files:"
       - find k8s-out/
-
-      # --- APPLY TO EKS ---
-      - echo Updating kubeconfig and applying Kubernetes manifests...
-      - aws eks update-kubeconfig --region $REGION --name eks-cluster-4
-      - kubectl apply -f k8s-out/
 
 artifacts:
   base-directory: k8s-out
