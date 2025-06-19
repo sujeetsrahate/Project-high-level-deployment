@@ -185,6 +185,30 @@ Resources:
           - !Ref PrivateSubnet1
           - !Ref PrivateSubnet2
 
+
+  ClusterAccessEntry:
+    Type: AWS::EKS::AccessEntry
+    Properties:
+      ClusterName: !Ref EKSCluster
+      PrincipalArn: !Ref CodePipelineRoleArn
+      AccessPolicies:
+        - Type: RBAC
+          Policy:
+            Type: INLINE_POLICY
+            InlinePolicy:
+              Version: '2021-10-17'
+              Statement:
+                - Effect: Allow
+                  Action: '*'
+                  Resource: '*'
+      KubernetesGroups:
+        - system:masters
+      Type: STANDARD
+      Username: pipeline-admin
+
+
+      
+
   EKSNodeGroupRole:
     Type: AWS::IAM::Role
     Properties:
